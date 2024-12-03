@@ -1,6 +1,6 @@
 # di-lazy
 
-> Lazy instantiation of the class based on first access to its reference
+> Lazy instantiation of the class based on the first access to its reference
 
 ## Usage
 

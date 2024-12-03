@@ -1,7 +1,7 @@
 {
   "name": "di-lazy",
-  "version": "1.0.1",
-  "description": "Lazy instantiation of the class based on first access to its reference",
+  "version": "1.0.2",
+  "description": "Lazy instantiation of the class based on the first access to its reference",
   "author": {
     "name": "Petr Tripolsky",
     "email": "tripolskypetr@gmail.com",
@@ -14,12 +14,13 @@
   "license": "MIT",
   "homepage": "https://react-declarative-playground.github.io",
   "keywords": [
-    "react-declarative",
     "dependency-injection",
-    "nodejs",
-    "transient",
-    "stateless",
-    "asp.net core"
+    "performance",
+    "optimization",
+    "oop",
+    "grpc",
+    "lazy-loading",
+    "optimization-algorithms"
   ],
   "files": [
     "build",

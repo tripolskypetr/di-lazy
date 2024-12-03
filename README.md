@@ -1,4 +1,4 @@
-# di-stateless
+# di-lazy
 
 > Lazy instantiation of the class based on first access to its reference
 

@@ -11,7 +11,7 @@ const LazyClass = lazy(class {
     console.log("CTOR", { args })
   }
   test = () => console.log("test");
-});
+}, "test");
 
 const lazyInstance = new LazyClass(1, 2, 3);
 

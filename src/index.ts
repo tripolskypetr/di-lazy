@@ -1,16 +1,22 @@
 const NEVER_VALUE = Symbol('never');
 
-export const lazy = <ClassType extends new (...args: any[]) => any>(ClassCtor: ClassType) => {
+export const lazy = <ClassType extends new (...args: any[]) => any>(ClassCtor: ClassType, ...keys: Array<keyof InstanceType<ClassType>>) => {
 
   let instance: typeof NEVER_VALUE | InstanceType<ClassType> = NEVER_VALUE;
 
-  const activateInstance = (...args: ConstructorParameters<ClassType>) => {
-    if (instance === NEVER_VALUE) {
+  const initKeys = new Set(keys);
+
+  if (!initKeys.size) {
+    throw new Error("di-lazy lazy no keys provided");
+  }
+
+  const activateInstance = (key: string | symbol, ...args: ConstructorParameters<ClassType>) => {
+    if (instance === NEVER_VALUE && initKeys.has(key)) {
       instance = new ClassCtor(...args);
       // @ts-ignore
       instance.init && instance.init();
     }
-    return instance as ClassType;
+    return instance === NEVER_VALUE ? {} : instance;
   };
 
   class ClassReferer {
@@ -20,11 +26,14 @@ export const lazy = <ClassType extends new (...args: any[]) => any>(ClassCtor: C
           if (propKey === 'init') {
             return;
           }
-          const reference = activateInstance(...args);
+          const reference = activateInstance(propKey, ...args);
           return Reflect.get(reference, propKey, receiver)
         },
         set(_, propKey, value, receiver) {
-          const reference = activateInstance(...args);
+          if (propKey === 'init') {
+            return false;
+          }
+          const reference = activateInstance(propKey, ...args);
           return Reflect.set(reference, propKey, value, receiver)
         },
       });
@@ -45,7 +54,7 @@ const LazyClass = lazy(class {
     console.log("CTOR", { args })
   }
   test = () => console.log("test")
-});
+}, "test");
 
 const lazyInstance = new LazyClass(1, 2, 3);
 

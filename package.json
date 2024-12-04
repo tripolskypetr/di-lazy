@@ -1,6 +1,6 @@
 {
   "name": "di-lazy",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Lazy instantiation of the class based on the first access to its reference",
   "author": {
     "name": "Petr Tripolsky",
